@@ -26,11 +26,11 @@ while True:
     # Se verifica que se hayan obtenido latitud y longitud
     if lat and lon:
         ciudades.append({"Ciudad":nombre, "Latitud": lat, "Longitud": lon}) 
+        print("Coordenadas registradas:")
+        for c in ciudades:
+            print(c)
         seleccion = input("¿Deseas intentar con otra ciudad? (si/no): ").strip().lower()
         if seleccion == "no":
-            print("Coordenadas registradas:")
-            for c in ciudades:
-                print(c)
             print("Cerrando programa")
             break
     else:
