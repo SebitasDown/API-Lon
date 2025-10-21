@@ -8,15 +8,18 @@ def obtener_coordenadas(ciudad):
 
     parametros = {"name": ciudad, "count": 1, "language": "es"}
 
-    resp = requests.get(geo_url, params=parametros)
-    data = resp.json()
-    
-    if resp.status_code == 200  and data.get("results"):
-        datos = resp.json()["results"][0]
-        return datos["latitude"], datos["longitude"], datos["name"]
-    else:
-        print("No se encontro la ciudad")
-        return None, None, None
+    try:
+        resp = requests.get(geo_url, params=parametros)
+        data = resp.json()
+        
+        if resp.status_code == 200  and data.get("results"):
+            datos = resp.json()["results"][0]
+            return datos["latitude"], datos["longitude"], datos["name"]
+        else:
+            print("No se encontro la ciudad")
+            return None, None, None
+    except requests.exceptions.RequestException as e:
+        print(f"Error en la conexion: {e}")        
 
 def obtener_clima(lat, lon):
     clima_url = "https://api.open-meteo.com/v1/forecast"
@@ -26,15 +29,16 @@ def obtener_clima(lat, lon):
         "longitude" : lon,
         "current_weather": True
     }
+    try:
+        resp = requests.get(clima_url, params=parametros)
 
-    resp = requests.get(clima_url, params=parametros)
-
-    if resp.status_code == 200:
-        return resp.json().get("current_weather", None)
-    else:
-        print("Error al obtener el clima")
-        return None    
-
+        if resp.status_code == 200:
+            return resp.json().get("current_weather", None)
+        else:
+            print("Error al obtener el clima")
+            return None    
+    except requests.exceptions.RequestException as e:
+        print(f"Error en la conexion: {e}")        
 
 # Bucle principal para solicitar ciudades y obtener coordenadas
 while True:
