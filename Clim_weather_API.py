@@ -81,4 +81,5 @@ while True:
 print("Ranking:")
 ranking = sorted (ciudades, key=lambda c: c["Temperatura"], reverse= True)
 for i, c in enumerate(ranking, start=1):
-    print(f"{i}. {c['Ciudad']}: {c['Temperatura']}°C - {c['Clima']}")
+    # print(f"{i}. {c['Ciudad']}: {c['Temperatura']}°C - {c['Clima']}")
+    print(f"{i}. {c['Ciudad']:<12} | {c['Temperatura']:>5}°C | {c['Clima']}")
